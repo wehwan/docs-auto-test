@@ -1,0 +1,10 @@
+# hugo config
+baseURL: "https://congenial-lamp-cfaab4b4.pages.github.io/"
+languageCode: "en-us"
+title: "RPS Document Site Test"
+theme: "hugo-book"
+
+# hugo-book theme config
+params:
+  BookTheme: auto
+  BookSection: "*"

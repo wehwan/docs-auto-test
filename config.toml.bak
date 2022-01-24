@@ -1,0 +1,11 @@
+baseURL = 'http://example.org/'
+#languageCode = 'en-us'
+languageCode = "en-us"
+title = 'My New Hugo Site'
+
+theme = "hugo-book"
+
+# hugo-book theme config
+params:
+  BookTheme: auto
+  BookSection: "*"
