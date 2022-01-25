@@ -1,0 +1,15 @@
+name: push-event
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - /Users/a202201033/IdeaProjects/docs-auto-test/**
+
+jobs:
+  myEvent:
+    runs-on: ubuntu-latest
+    steps:
+      - name: copy submodule markdown file to hugo content directory
+        run: |
+          find /Users/a202201033/IdeaProjects/docs-auto-test/submodules -name "*.md" | cpio -pdm /Users/a202201033/IdeaProjects/docs-auto-test/content
