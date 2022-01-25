@@ -11,10 +11,19 @@ jobs:
           ref: ${{ github.event.client_payload.ref }}
       - run: echo ${{ github.event.client_payload.sha }}
       
-      # copy files
+      # copy files 1
       - uses: actions/checkout@master
       - name: copy file
         uses: canastro/copy-file-action@master
         with:
-          source: "submodules"
-          target: "content/submodules"
+          source: "./submodules"
+          target: "./content/submodules"
+
+      # copy files 2
+      - name: Copy Paste Action
+        uses: ShreyamMaity/Copy-Paste-Action@main
+        with:
+          TOKEN: ${{ secrets.TOKEN }}
+          REPOSITORY : 'Your Repository Name'
+          COPY-FILE-LOCATION : './submodules'
+          PASTE-FILE-LOCATION : './content/submodules'
