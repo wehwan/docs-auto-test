@@ -17,4 +17,7 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - shell: bash
         run: |
+          find submodules -name "*.md"
+      - shell: bash
+        run: |
           find submodules -name "*.md" | cpio -pdm content
