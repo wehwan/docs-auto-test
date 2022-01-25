@@ -15,3 +15,7 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
+          steps:
+      - name: copy submodule markdown file to hugo content directory
+        run: |
+          find /Users/a202201033/IdeaProjects/docs-auto-test/submodules -name "*.md" | cpio -pdm /Users/a202201033/IdeaProjects/docs-auto-test/content
