@@ -24,6 +24,6 @@ jobs:
         uses: ShreyamMaity/Copy-Paste-Action@main
         with:
           TOKEN: ${{ secrets.TOKEN }}
-          REPOSITORY : 'Your Repository Name'
+          REPOSITORY : wehwan/docs-auto-test
           COPY-FILE-LOCATION : './submodules'
           PASTE-FILE-LOCATION : './content/submodules'
