@@ -17,4 +17,4 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - shell: bash
         run: |
-          find /Users/a202201033/IdeaProjects/docs-auto-test/submodules -name "*.md" | cpio -pdm /Users/a202201033/IdeaProjects/docs-auto-test/content
+          find submodules -name "*.md" | cpio -pdm content
