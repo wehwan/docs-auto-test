@@ -14,17 +14,26 @@ jobs:
       - run: echo ${{ github.event.client_payload.sha }}
 
       # remote submodules update (auto fetch)      
-#       - name: Checkout repository
-#         uses: actions/checkout@v2
-#       - name: Checkout submodules
-#         uses: srt32/git-actions@v0.0.3
-#         with:
-#           args: git submodule update --remote --init --recursive
-
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Checkout submodules
         run: git submodule update --remote --init --recursive
+
+      # push and commit
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false # otherwise, the token used is the GITHUB_TOKEN, instead of your personal access token.
+          fetch-depth: 0 # otherwise, there would be errors pushing refs to the destination repository.
+      - name: Commit files
+        run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Add changes" -a
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
 
       # hugo theme update
       - uses: actions/checkout@v2
