@@ -7,3 +7,6 @@
 [submodule "content/submodules/submodule-test2"]
 	path = content/submodules/submodule-test2
 	url = https://github.com/wehwan/submodule-test2.git
+[submodule "content/submodules/submodule-test"]
+	path = content/submodules/submodule-test
+	url = https://github.com/wehwan/submodule-test.git
