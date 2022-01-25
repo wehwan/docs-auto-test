@@ -1,4 +1,6 @@
 name: Repository Dispatch
+
+# submodule에서 신호를 보내면(push시) 반응
 on:
   repository_dispatch:
     types: [my-event]
@@ -10,32 +12,34 @@ jobs:
         with:
           ref: ${{ github.event.client_payload.ref }}
       - run: echo ${{ github.event.client_payload.sha }}
-      
-      # copy files 1
-#       - uses: actions/checkout@master
-#       - name: copy file
-#         uses: canastro/copy-file-action@master
-#         with:
-#           source: "./submodules"
-#           target: "./content/submodules"
 
-      # copy files 2
-#       - name: Copy Paste Action
-#         uses: ShreyamMaity/Copy-Paste-Action@main
-#         with:
-#           TOKEN: ${{ secrets.TOKEN }}
-#           REPOSITORY : wehwan/docs-auto-test
-#           COPY-FILE-LOCATION : './submodules'
-#           PASTE-FILE-LOCATION : './content/submodules'
+      # hugo theme update
+      - uses: actions/checkout@v2
+        with:
+          submodules: true # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
 
-      # copy files 3
+      # hugo setup
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "latest"
+          extended: true
+
+      # hugo build
+      - name: Build
+        run: hugo --minify
+
+      # hugo deploy
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.ref == 'refs/heads/master'
+        with:
+          github_token: ${{ secrets.TOKEN }}
+          publish_dir: ./public
+
+      # remote submodules update (auto fetch)
       - name: copy submodule markdowns
         shell: bash
         run: |
-          find submodules -name "*.md" | cpio -pdm ./content
-          
-      - name: print copy list
-        shell: bash
-        run: |
-          value=`find submodules -name "*.md"`
-          echo The result is $value
+          git submodule update --remote
