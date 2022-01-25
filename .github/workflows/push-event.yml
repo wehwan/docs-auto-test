@@ -1,15 +1,12 @@
-name: push-event
+name: Repository Dispatch
 on:
-  push:
-    branches:
-      - master
-    paths:
-      - /Users/a202201033/IdeaProjects/docs-auto-test/**
-
+  repository_dispatch:
+    types: [my-event]
 jobs:
   myEvent:
     runs-on: ubuntu-latest
     steps:
-      - name: copy submodule markdown file to hugo content directory
-        run: |
-          find /Users/a202201033/IdeaProjects/docs-auto-test/submodules -name "*.md" | cpio -pdm /Users/a202201033/IdeaProjects/docs-auto-test/content
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.ref }}
+      - run: echo ${{ github.event.client_payload.sha }}
