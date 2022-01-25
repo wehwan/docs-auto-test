@@ -20,3 +20,15 @@ jobs:
         run: |
           value=`find ./submodules -name "*.md"`
           echo The result is $value
+
+      - name: ls
+        shell: bash
+        run: |
+          value=`ls -alrt`
+          echo The result is $value
+          
+      - name: pwd
+        shell: bash
+        run: |
+          value=`pwd`
+          echo The result is $value
