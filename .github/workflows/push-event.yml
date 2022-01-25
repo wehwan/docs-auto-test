@@ -1,15 +1,44 @@
-name: push-event
-on:
-  push:
-    branches:
-      - master
-    paths:
-      - /Users/a202201033/IdeaProjects/docs-auto-test/**
+name: Repository Dispatch
 
+# submodule에서 신호를 보내면(push시) 반응
+on:
+  repository_dispatch:
+    types: [my-event]
 jobs:
   myEvent:
     runs-on: ubuntu-latest
     steps:
-      - name: copy submodule markdown file to hugo content directory
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.client_payload.ref }}
+      - run: echo ${{ github.event.client_payload.sha }}
+
+      # hugo theme update
+      - uses: actions/checkout@v2
+        with:
+          submodules: true # Fetch Hugo themes (true OR recursive)
+          fetch-depth: 0 # Fetch all history for .GitInfo and .Lastmod
+
+      # hugo setup
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "latest"
+          extended: true
+
+      # hugo build
+      - name: Build
+        run: hugo --minify
+
+      # hugo deploy
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+
+      # remote submodules update (auto fetch)
+      - name: copy submodule markdowns
+        shell: bash
         run: |
-          find /Users/a202201033/IdeaProjects/docs-auto-test/submodules -name "*.md" | cpio -pdm /Users/a202201033/IdeaProjects/docs-auto-test/content
+          git submodule update --remote
