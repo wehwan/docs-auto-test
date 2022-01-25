@@ -15,9 +15,8 @@ jobs:
         run: |
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
-      - shell: bash
+      - name: print copy list
+        shell: bash
         run: |
-          find submodules -name "*.md"
-      - shell: bash
-        run: |
-          find submodules -name "*.md" | cpio -pdm content
+          value=`find ./submodules -name "*.md"`
+          echo The result is $value
