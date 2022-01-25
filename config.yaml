@@ -1,5 +1,5 @@
 # hugo config
-baseURL: "https://congenial-lamp-cfaab4b4.pages.github.io/"
+baseURL: "https://wehwan.github.io/docs-auto-test/"
 languageCode: "en-us"
 title: "RPS Document Site Test"
 theme: "hugo-book"
