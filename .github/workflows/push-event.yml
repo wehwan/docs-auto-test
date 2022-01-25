@@ -13,11 +13,11 @@ jobs:
           ref: ${{ github.event.client_payload.ref }}
       - run: echo ${{ github.event.client_payload.sha }}
 
-      # remote submodules update (auto fetch)
-      - name: copy submodule markdowns
-        shell: bash
-        run: |
-          git submodule update --remote
+      # remote submodules update (auto fetch)      
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Checkout submodules
+        run: git submodule update --init --recursive
 
       # hugo theme update
       - uses: actions/checkout@v2
