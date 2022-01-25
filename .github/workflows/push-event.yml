@@ -20,10 +20,22 @@ jobs:
 #           target: "./content/submodules"
 
       # copy files 2
-      - name: Copy Paste Action
-        uses: ShreyamMaity/Copy-Paste-Action@main
-        with:
-          TOKEN: ${{ secrets.TOKEN }}
-          REPOSITORY : wehwan/docs-auto-test
-          COPY-FILE-LOCATION : './submodules'
-          PASTE-FILE-LOCATION : './content/submodules'
+#       - name: Copy Paste Action
+#         uses: ShreyamMaity/Copy-Paste-Action@main
+#         with:
+#           TOKEN: ${{ secrets.TOKEN }}
+#           REPOSITORY : wehwan/docs-auto-test
+#           COPY-FILE-LOCATION : './submodules'
+#           PASTE-FILE-LOCATION : './content/submodules'
+
+      # copy files 3
+      - name: copy submodule markdowns
+        shell: bash
+        run: |
+          find submodules -name "*.md" | cpio -pdm ./content
+          
+      - name: print copy list
+        shell: bash
+        run: |
+          value=`find submodules -name "*.md"`
+          echo The result is $value
