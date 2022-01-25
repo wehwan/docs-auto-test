@@ -1,3 +1,0 @@
-# submodule-test
-q
-docs 자동화 서브모듈 
