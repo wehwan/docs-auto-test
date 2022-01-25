@@ -17,4 +17,4 @@ jobs:
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - name: copy submodule markdown file to hugo content directory
         run: |
-          sh /Users/a202201033/IdeaProjects/docs-auto-test/cp-content.sh
+          find /Users/a202201033/IdeaProjects/docs-auto-test/submodules -name "*.md" | cpio -pdm /Users/a202201033/IdeaProjects/docs-auto-test/content
