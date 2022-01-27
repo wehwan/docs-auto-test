@@ -18,6 +18,14 @@ jobs:
       - name: Checkout submodules
         run: git submodule update --remote --init --recursive
 
+      - name: print index.md file list
+        run: find index -name "*.md"
+        working-directory: .
+
+      - name: copy index.md file
+        run: find index -name "*.md" | cpio -pdm ./content/submodules
+        working-directory: .
+
       # push and commit
       - name: Commit files
         run: |
