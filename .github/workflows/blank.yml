@@ -38,10 +38,10 @@ jobs:
         run: pwd
         working-directory: .
 
-#       # git add
-#       - name: git add
-#         run: git add .
-#         working-directory: .
+      # git add
+      - name: git add
+        run: git add .
+        working-directory: .
       
       # push and commit
       - name: Commit files
