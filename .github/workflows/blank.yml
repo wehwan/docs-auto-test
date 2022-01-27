@@ -20,16 +20,16 @@ jobs:
         run: git submodule update --remote --init --recursive
 
       - name: print index.md file list
-        run: find index -name "*.md"
-        working-directory: .
+        run: find . -name "*.md"
+        working-directory: ./index
 
       - name: print index.md file list 2
-        run: find index -name "*.md" | cut -d '/' -f 1-
-        working-directory: .
+        run: find . -name "*.md" | cut -d '/' -f 1-
+        working-directory: ./index
 
       - name: copy index.md file
-        run: find index -name "*.md" | cut -d '/' -f 1-  | cpio -pdm ./content/submodules
-        working-directory: .
+        run: find . -name "*.md" | cut -d '/' -f 1-  | cpio -pdm ../content/submodules 
+        working-directory: ./index
 
       # git add
       - name: git add
