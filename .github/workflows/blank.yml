@@ -23,6 +23,10 @@ jobs:
         run: find index -name "*.md"
         working-directory: .
 
+      - name: print index.md file list 2
+        run: find index -name "*.md" | cut -d '/' -f 1-
+        working-directory: .
+
       - name: copy index.md file
         run: find index -name "*.md" | cut -d '/' -f 1-  | cpio -pdm ./content/submodules
         working-directory: .
