@@ -1,10 +1,11 @@
 name: cron
 
 # trigger
-on:
-  schedule:
-    # utc time (+9)
-    - cron: '?/10 * * * *'
+# on:
+#   schedule:
+#     # utc time (+9)
+#     - cron: '?/10 * * * *'
+on: [push]
 
 # work jobs
 jobs:
@@ -23,7 +24,7 @@ jobs:
         working-directory: .
 
       - name: copy index.md file
-        run: find index -name "*.md" | cpio -pdm ./content/submodules
+        run: find index -name "*.md" | cut -d '/' -f 1-  | cpio -pdm ./content/submodules
         working-directory: .
 
       # git add
