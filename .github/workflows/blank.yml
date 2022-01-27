@@ -23,12 +23,8 @@ jobs:
         run: find . -name "*.md"
         working-directory: ./index
 
-      - name: print index.md file list 2
-        run: find . -name "*.md" | cut -d '/' -f 1-
-        working-directory: ./index
-
       - name: copy index.md file
-        run: find . -name "*.md" | cut -d '/' -f 1-  | cpio -pdm ../content/submodules 
+        run: find . -name "*.md" | cpio -pdm ../content/submodules 
         working-directory: ./index
 
       # git add
