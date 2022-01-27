@@ -26,6 +26,11 @@ jobs:
         run: find index -name "*.md" | cpio -pdm ./content/submodules
         working-directory: .
 
+      # git add
+      - name: git add
+        run: git add .
+        working-directory: .
+
       # push and commit
       - name: Commit files
         run: |
