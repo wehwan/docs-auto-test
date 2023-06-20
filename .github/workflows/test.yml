@@ -71,7 +71,7 @@ jobs:
         uses: EndBug/add-and-commit@v9
         with:
           message: Bump the version from ${{ steps.get-current-version.outputs.CURRENT_VERSION}} to ${{ steps.get-bumped-version.outputs.BUMPED_VERSION}} by ${{ github.event.inputs.level }}
-          add: 'build.gradle.kts'
+          add: 'config.yaml'
           pathspec_error_handling: exitImmediately
           tag: ${{ steps.get-bumped-version.outputs.BUMPED_VERSION}}
           push: true
