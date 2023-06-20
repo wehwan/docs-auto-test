@@ -1,3 +1,6 @@
+
+version = "1.0.3"
+
 # hugo config
 baseURL: "https://wehwan.github.io/docs-auto-test/"
 languageCode: "en-us"
