@@ -35,7 +35,7 @@ jobs:
       - name: Get the current version
         id: get-current-version
         run: |
-          CURRENT_VERSION=$(awk -F'[ ="]+' '$1 == "version" { print $2 }' build.gradle.kts)
+          CURRENT_VERSION=$(awk -F'[ ="]+' '$1 == "version" { print $2 }' config.yaml)
           echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
           echo "CURRENT_VERSION=${CURRENT_VERSION}"
 
