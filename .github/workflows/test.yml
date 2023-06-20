@@ -72,6 +72,8 @@ jobs:
         with:
           message: Bump the version from ${{ steps.get-current-version.outputs.CURRENT_VERSION}} to ${{ steps.get-bumped-version.outputs.BUMPED_VERSION}} by ${{ github.event.inputs.level }}
           add: 'config.yaml'
+          #new_branch: ''
           pathspec_error_handling: exitImmediately
           tag: ${{ steps.get-bumped-version.outputs.BUMPED_VERSION}}
           push: true
+          tag_push: '--force'
