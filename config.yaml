@@ -1,5 +1,5 @@
 
-version = "1.0.3"
+version = "1.0.4-main.0"
 
 # hugo config
 baseURL: "https://wehwan.github.io/docs-auto-test/"
