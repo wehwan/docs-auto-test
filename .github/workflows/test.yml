@@ -60,7 +60,7 @@ jobs:
           CURRENT_VERSION: ${{ steps.get-current-version.outputs.CURRENT_VERSION }}
           BUMPED_VERSION: ${{ steps.get-bumped-version.outputs.BUMPED_VERSION }}
         run: |
-          sed -i "s/^version = \"${CURRENT_VERSION}\"$/version = \"${BUMPED_VERSION}\"/" build.gradle.kts
+          sed -i "s/^version = \"${CURRENT_VERSION}\"$/version = \"${BUMPED_VERSION}\"/" config.yaml
 
 
       #############################
