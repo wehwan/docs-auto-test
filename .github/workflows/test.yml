@@ -1,0 +1,76 @@
+name: Publish Docker Images to Stage ECR Tag Update Test
+
+on:
+  workflow_dispatch:
+    inputs:
+      level:
+        type: choice
+        description: 'Incremental Level'
+        required: true
+        default: 'prerelease'
+        options:
+          - prerelease
+          - prepatch
+          - preminor
+          - premajor
+
+jobs:
+  build:
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      #############################
+      #VERSION
+      #############################
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install semver
+        run: |
+          npm install --global semver
+
+      - name: Get the current version
+        id: get-current-version
+        run: |
+          CURRENT_VERSION=$(awk -F'[ ="]+' '$1 == "version" { print $2 }' build.gradle.kts)
+          echo "CURRENT_VERSION=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
+          echo "CURRENT_VERSION=${CURRENT_VERSION}"
+
+      - name: Get the bumped version
+        id: get-bumped-version
+        env:
+          LEVEL: ${{ github.event.inputs.level }}
+          CURRENT_VERSION: ${{ steps.get-current-version.outputs.CURRENT_VERSION }}
+        run: |
+          if [[ "${LEVEL}" =~ (premajor|preminor|prepatch|prerelease) ]] ; then
+            PREID="${GITHUB_REF##*/}"
+            PREOPTION="--preid ${PREID}"
+          else
+            PREOPTION=""
+          fi
+          BUMPED_VERSION=$(semver --increment ${LEVEL} ${PREOPTION} ${CURRENT_VERSION})
+          echo "BUMPED_VERSION=${BUMPED_VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Update the version related files
+        env:
+          CURRENT_VERSION: ${{ steps.get-current-version.outputs.CURRENT_VERSION }}
+          BUMPED_VERSION: ${{ steps.get-bumped-version.outputs.BUMPED_VERSION }}
+        run: |
+          sed -i "s/^version = \"${CURRENT_VERSION}\"$/version = \"${BUMPED_VERSION}\"/" build.gradle.kts
+
+
+      #############################
+      #APPLY VERSION
+      #############################
+
+      - name: Commit, Tag and Push
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: Bump the version from ${{ steps.get-current-version.outputs.CURRENT_VERSION}} to ${{ steps.get-bumped-version.outputs.BUMPED_VERSION}} by ${{ github.event.inputs.level }}
+          add: 'build.gradle.kts'
+          pathspec_error_handling: exitImmediately
+          tag: ${{ steps.get-bumped-version.outputs.BUMPED_VERSION}}
+          push: true
